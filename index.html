@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Práctica gratuita para el examen teórico de licencia de conducir en Puebla, basada en la guía oficial SMT 2026.">
+<title>Repaso Licencia Puebla</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Overpass:wght@600;800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+/* Layout: a road-sign header panel over a single readable question column; big tap targets for phone use. */
+:root {
+  --bg: #eef2ef;
+  --surface: #ffffff;
+  --fg: #17221d;
+  --muted: #56675e;
+  --line: #cdd7d1;
+  --sign: #0b5d3e;
+  --sign-fg: #ffffff;
+  --ok: #1d7446;
+  --ok-soft: #e1f2e8;
+  --bad: #b3261e;
+  --bad-soft: #fbe6e4;
+  --amber: #e9a800;
+  --amber-fg: #1b1500;
+  --focus: #1b5fd1;
+  --font-display: "Overpass", "Arial Narrow", Arial, sans-serif;
+  --font-body: "Atkinson Hyperlegible", "Segoe UI", Verdana, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1412; --surface: #17201c; --fg: #e5ece8; --muted: #9fb1a7; --line: #2c3a33;
+    --sign: #0f6a48; --sign-fg: #ffffff; --ok: #57c78f; --ok-soft: #173326; --bad: #ff7b72; --bad-soft: #3a1c1a;
+    --amber: #f2bf2f; --amber-fg: #1b1500; --focus: #7fb0ff; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e1412; --surface: #17201c; --fg: #e5ece8; --muted: #9fb1a7; --line: #2c3a33;
+  --sign: #0f6a48; --sign-fg: #ffffff; --ok: #57c78f; --ok-soft: #173326; --bad: #ff7b72; --bad-soft: #3a1c1a;
+  --amber: #f2bf2f; --amber-fg: #1b1500; --focus: #7fb0ff; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 17px; line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 20px 40px;
+}
+.wrap { max-width: 680px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; }
+.sign {
+  background: var(--sign); color: var(--sign-fg); border-radius: 10px; padding: 6px;
+}
+.sign-inner {
+  border: 2px solid var(--sign-fg); border-radius: 6px; padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 4px;
+}
+.eyebrow { font-family: var(--font-display); font-weight: 600; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; opacity: .9; }
+h1 { font-family: var(--font-display); font-weight: 800; font-size: clamp(28px, 6vw, 38px); line-height: 1.05; margin: 0; text-wrap: balance; }
+.rules { display: flex; flex-wrap: wrap; gap: 6px 16px; font-family: var(--font-display); font-weight: 600; font-size: 15px; margin-top: 6px; }
+.rules span { white-space: nowrap; }
+.tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+.tab {
+  font: 700 15px var(--font-body); padding: 10px 16px; border-radius: 999px; border: 1.5px solid var(--line);
+  background: var(--surface); color: var(--fg); cursor: pointer; min-height: 44px;
+}
+.tab[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.tab .n { font-variant-numeric: tabular-nums; opacity: .75; }
+.bar { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between; color: var(--muted); font-size: 15px; }
+.bar label { display: flex; gap: 8px; align-items: center; }
+select { font: 15px var(--font-body); padding: 8px 10px; border-radius: 8px; border: 1.5px solid var(--line); background: var(--surface); color: var(--fg); min-height: 40px; max-width: 100%; }
+.stat { font-variant-numeric: tabular-nums; }
+.timer { font-family: var(--font-display); font-weight: 800; font-size: 20px; color: var(--fg); font-variant-numeric: tabular-nums; }
+.timer.low { color: var(--bad); }
+.card { background: var(--surface); border: 1.5px solid var(--line); border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.meta { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; align-items: center; font-size: 14px; color: var(--muted); }
+.chip { font: 700 12px var(--font-display); letter-spacing: .08em; text-transform: uppercase; background: var(--amber); color: var(--amber-fg); padding: 4px 9px; border-radius: 4px; }
+.q { font-size: 21px; font-weight: 700; line-height: 1.35; margin: 0; text-wrap: pretty; }
+.opts { display: flex; flex-direction: column; gap: 10px; }
+.opt {
+  display: grid; grid-template-columns: 30px 1fr; gap: 10px; align-items: start; text-align: left;
+  font: 17px/1.4 var(--font-body); color: var(--fg); background: var(--bg); border: 2px solid var(--line);
+  border-radius: 10px; padding: 12px 14px; cursor: pointer; min-height: 52px;
+}
+.opt .k { font: 800 15px var(--font-display); width: 26px; height: 26px; border-radius: 50%; border: 2px solid currentColor; display: grid; place-items: center; opacity: .7; }
+.opt:hover:not([disabled]) { border-color: var(--fg); }
+.opt.sel { border-color: var(--fg); background: var(--surface); box-shadow: inset 0 0 0 1px var(--fg); }
+.opt.right { border-color: var(--ok); background: var(--ok-soft); }
+.opt.right .k { background: var(--ok); color: var(--surface); border-color: var(--ok); opacity: 1; }
+.opt.wrong { border-color: var(--bad); background: var(--bad-soft); }
+.opt.wrong .k { background: var(--bad); color: var(--surface); border-color: var(--bad); opacity: 1; }
+.opt[disabled] { cursor: default; }
+.fb { padding: 12px 14px; background: var(--ok-soft); border-radius: 8px; }
+.fb strong { color: var(--ok); }
+.fb.no { background: var(--bad-soft); }
+.fb.no strong { color: var(--bad); }
+.fb strong { display: block; margin-bottom: 2px; }
+.fb .src { display: block; font-size: 14px; color: var(--muted); margin-top: 4px; }
+.actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+.btn {
+  font: 700 16px var(--font-body); padding: 12px 20px; border-radius: 10px; border: 0; cursor: pointer; min-height: 48px;
+  background: var(--sign); color: var(--sign-fg);
+}
+.btn.ghost { background: transparent; color: var(--fg); border: 1.5px solid var(--line); }
+.btn[disabled] { opacity: .45; cursor: default; }
+button:focus-visible, select:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.result { text-align: center; display: flex; flex-direction: column; gap: 6px; align-items: center; }
+.big { font-family: var(--font-display); font-weight: 800; font-size: 56px; line-height: 1; font-variant-numeric: tabular-nums; }
+.verdict { font: 800 15px var(--font-display); letter-spacing: .1em; text-transform: uppercase; padding: 6px 12px; border-radius: 4px; }
+.verdict.pass { background: var(--ok); color: var(--surface); }
+.verdict.fail { background: var(--bad); color: var(--surface); }
+.review { display: flex; flex-direction: column; gap: 12px; text-align: left; width: 100%; }
+.review-item { border-top: 1px solid var(--line); padding-top: 12px; }
+.review-item p { margin: 0 0 4px; }
+.review-item .yours { color: var(--bad); }
+.review-item .good { color: var(--ok); font-weight: 700; }
+.empty { color: var(--muted); text-align: center; padding: 20px 0; }
+.note { font-size: 14px; color: var(--muted); line-height: 1.5; }
+.note p { margin: 0 0 8px; }
+.kbd-hint { font-size: 13px; color: var(--muted); }
+@media (max-width: 480px) { .kbd-hint { display: none; } .q { font-size: 19px; } }
+@media (prefers-reduced-motion: no-preference) { .opt, .tab { transition: border-color .15s, background-color .15s; } }
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header class="sign">
+    <div class="sign-inner">
+      <span class="eyebrow">SMT Puebla · Examen teórico</span>
+      <h1>Repaso de licencia</h1>
+      <div class="rules"><span>10 preguntas</span><span>10 minutos</span><span>Pasas con 8</span></div>
+    </div>
+  </header>
+
+  <nav class="tabs" aria-label="Modo">
+    <button class="tab" id="tab-practica" data-mode="practica" aria-pressed="true">Práctica</button>
+    <button class="tab" id="tab-simulacro" data-mode="simulacro" aria-pressed="false">Simulacro de examen</button>
+    <button class="tab" id="tab-falladas" data-mode="falladas" aria-pressed="false">Falladas <span class="n" id="missed-n">0</span></button>
+  </nav>
+
+  <div class="bar" id="bar"></div>
+  <main class="card" id="card" aria-live="polite"></main>
+
+  <section class="note">
+    <p>Preguntas escritas a partir de la <strong>Guía de Estudio para el Examen Teórico</strong> de la Secretaría de Movilidad y Transporte de Puebla (junio de 2026). No son las preguntas oficiales del examen, pero cubren los mismos temas. Cada respuesta indica la página de la guía.</p>
+    <p>La guía tiene un par de cifras que no coinciden entre páginas (la distancia para no rebasar antes de un crucero dice 30 m en una página y 50 m en otra). Esas preguntas se dejaron fuera.</p>
+    <p>Descarga la guía oficial en <a href="https://smt.puebla.gob.mx" style="color:inherit">smt.puebla.gob.mx</a>. Sitio no oficial, sin relación con el Gobierno del Estado de Puebla.</p>
+  </section>
+</div>
+
+<script type="application/json" id="data">
+[
+{"t":"Señales y semáforos","q":"Las señales que avisan de un peligro, como una curva, una pendiente o una escuela cercana, son:","o":["Preventivas","Restrictivas","Informativas","De obra"],"e":"Las preventivas advierten sobre un peligro potencial: pendiente, curva peligrosa, escuelas, cruce de peatones o de ferrocarril.","p":3},
+{"t":"Señales y semáforos","q":"Una señal de límite de velocidad o de prohibido estacionarse es una señal:","o":["Restrictiva","Preventiva","Informativa","Turística"],"e":"Las restrictivas indican limitaciones o prohibiciones: velocidad, paso de ciertos vehículos, estacionamiento.","p":3},
+{"t":"Señales y semáforos","q":"Las señales que indican nombres de poblaciones, servicios cercanos o el kilometraje son:","o":["Informativas","Preventivas","Restrictivas","Obligatorias"],"e":"Las informativas guían al usuario: de ruta, de destino, de servicios y de información general.","p":4},
+{"t":"Señales y semáforos","q":"¿Qué significa la luz ámbar (amarilla) fija del semáforo?","o":["Prevención: está por aparecer la luz roja","Acelerar para alcanzar a cruzar","Siga con precaución","Alto total inmediato"],"e":"El ámbar es señal de prevención; anticipa que viene el rojo.","p":4},
+{"t":"Señales y semáforos","q":"El semáforo está en ámbar intermitente. ¿Qué debes hacer?","o":["Disminuir la velocidad al mínimo y avanzar con precaución","Hacer alto total y esperar el verde","Seguir a la velocidad normal","Dar vuelta en U"],"e":"Ámbar intermitente: reduce al mínimo y continúa con precaución. Quien circula con ámbar intermitente tiene preferencia sobre quien tiene rojo intermitente.","p":4},
+{"t":"Señales y semáforos","q":"El semáforo está en rojo intermitente. ¿Qué debes hacer?","o":["Alto total al llegar a la intersección y después avanzar con precaución","Reducir la velocidad sin detenerte","Esperar a que cambie a verde","Tocar el claxon y cruzar"],"e":"Rojo intermitente: alto total y luego cruzar con precaución.","p":4},
+{"t":"Señales y semáforos","q":"Tienes verde, pero hay tráfico y no alcanzarías a cruzar completamente la intersección. ¿Qué haces?","o":["Te detienes en la línea de alto para no bloquear el cruce","Avanzas porque tienes verde","Te metes hasta donde quepas","Cruzas por el carril contrario"],"e":"Aunque el verde indique siga, debes detenerte en la línea de alto para no obstruir las calles transversales.","p":4},
+{"t":"Señales y semáforos","q":"Un Agente de Proximidad Vial dirige el tránsito en un crucero con semáforo funcionando. ¿A quién obedeces?","o":["Al agente, aunque el semáforo indique otra cosa","Al semáforo","Al que llegue primero","A las señales pintadas en el piso"],"e":"Las indicaciones del agente prevalecen sobre cualquier otro señalamiento, incluidos los semáforos.","p":4},
+{"t":"Señales y semáforos","q":"El agente está de costado, mueve los brazos señalando el sentido de la circulación y da dos toques cortos de silbato. Significa:","o":["Siga","Alto","Preventiva","Alto general"],"e":"Siga: de costado, moviendo los brazos, dos toques cortos.","p":5},
+{"t":"Señales y semáforos","q":"El agente levanta el brazo derecho en posición vertical y da tres toques largos. Significa:","o":["Alto general","Siga","Preventiva","Acelerar la circulación"],"e":"Alto general: brazo derecho vertical y tres toques largos. Un toque corto de frente o de espalda es alto; un toque largo con la mano arriba es preventiva.","p":5},
+{"t":"Señales y semáforos","q":"Una raya continua pintada entre carriles indica que:","o":["Está prohibido rebasar","Puedes rebasar con precaución","Es un carril exclusivo de bicicletas","Puedes estacionarte"],"e":"Raya continua prohíbe el rebase; raya discontinua o punteada lo autoriza.","p":5},
+{"t":"Preferencia de paso","q":"Según la jerarquía de la movilidad, ¿quién tiene la máxima prioridad?","o":["Peatones, personas con discapacidad y con movilidad limitada","Transporte público","Ciclistas","Vehículos particulares"],"e":"Orden: 1) peatones, 2) ciclistas y vehículos no motorizados, 3) transporte público de pasajeros, 4) transporte de carga y distribución, 5) vehículos motorizados particulares.","p":5},
+{"t":"Preferencia de paso","q":"En la jerarquía de la movilidad, los vehículos motorizados particulares ocupan:","o":["El último lugar","El primer lugar","El segundo lugar","El mismo lugar que el transporte público"],"e":"Los usuarios de vehículos motorizados particulares están en el quinto y último lugar.","p":5},
+{"t":"Preferencia de paso","q":"Un peatón empezó a cruzar con su semáforo, pero no terminó y a ti ya te tocó el verde. ¿Qué haces?","o":["Esperas a que termine de cruzar; tiene preferencia","Avanzas porque ya tienes verde","Le tocas el claxon para que se apure","Lo rodeas por un lado"],"e":"Los peatones que iniciaron el cruce a tiempo tienen derecho a completarlo.","p":7},
+{"t":"Preferencia de paso","q":"Vas a salir de tu cochera y debes cruzar la banqueta. Pasa un peatón. ¿Quién tiene preferencia?","o":["El peatón","Tú, porque sales de tu propiedad","El que vaya más rápido","Nadie; se negocia"],"e":"Al entrar o salir de cocheras o estacionamientos, el peatón que va por la banqueta tiene preferencia.","p":7},
+{"t":"Preferencia de paso","q":"Llegas a una glorieta. ¿Quién tiene preferencia de paso?","o":["Quien ya circula dentro de la glorieta","Quien va a entrar a la glorieta","El vehículo más grande","Quien venga por la izquierda"],"e":"Quienes circulan en la glorieta tienen preferencia sobre quienes pretenden acceder a ella.","p":16},
+{"t":"Preferencia de paso","q":"Quieres incorporarte a una vía primaria. ¿Quién tiene preferencia?","o":["Quien ya circula por la vía primaria","Tú, porque señalaste con la direccional","El que tenga más prisa","Nadie, es indistinto"],"e":"Quien circula por la vía primaria tiene preferencia sobre quien pretende acceder. A su vez, quien va en la principal debe bajar la velocidad para permitir un acceso seguro.","p":16},
+{"t":"Preferencia de paso","q":"En una vía hay reducción de carriles. ¿Quién tiene preferencia?","o":["El vehículo que circula en el carril que se conserva","El vehículo del carril que se termina","El que vaya más rápido","El vehículo más grande"],"e":"Con reducción de carriles, tiene preferencia quien va por el carril que continúa; los demás se intercalan uno a uno.","p":19},
+{"t":"Preferencia de paso","q":"Cruce de una calle con camellón central y otra sin camellón, sin señales. ¿Quién tiene preferencia?","o":["Quien circula por la calle con camellón","Quien circula por la calle sin camellón","Quien llegue por la izquierda","El que toque primero el claxon"],"e":"Tienen preferencia quienes van por calles con camellón central sobre quienes van por calles sin camellón.","p":16},
+{"t":"Preferencia de paso","q":"Cruce de una calle pavimentada con una de terracería. ¿Quién tiene preferencia?","o":["Quien va por la calle pavimentada","Quien va por la calle de terracería","El vehículo más pesado","Quien venga de bajada"],"e":"Quienes transitan por vías asfaltadas o pavimentadas tienen preferencia sobre las que no lo están.","p":16},
+{"t":"Preferencia de paso","q":"Cruce de una calle de doble sentido con una de un solo sentido. ¿Quién tiene preferencia?","o":["Quien circula por la calle de doble sentido","Quien circula por la calle de un sentido","Quien venga por la izquierda","El que vaya más lento"],"e":"Quienes circulan por calles de doble sentido tienen preferencia sobre quienes circulan por calles de un sentido.","p":16},
+{"t":"Preferencia de paso","q":"Dos filas de autos llegan a una intersección de dos calles locales, cada una con un solo carril efectivo. ¿Cómo se pasa?","o":["Uno y uno, alternando","Primero pasa toda la fila más larga","Pasa siempre la fila de la derecha","Pasa quien toque el claxon"],"e":"Pasa primero quien llegó primero y después la preferencia se intercambia uno por uno.","p":16},
+{"t":"Velocidad y alcohol","q":"Sin señalamiento, ¿cuál es el límite en calles locales y en entornos de escuelas u hospitales (en horario de uso)?","o":["20 km/h","30 km/h","40 km/h","50 km/h"],"e":"20 km/h en calles locales y en entornos de escuelas, hospitales, asilos y centros de reunión cuando están concurridos.","p":24},
+{"t":"Velocidad y alcohol","q":"Sin señalamiento, ¿cuál es el límite en calles secundarias y terciarias?","o":["30 km/h","20 km/h","50 km/h","60 km/h"],"e":"30 km/h en calles secundarias y terciarias.","p":24},
+{"t":"Velocidad y alcohol","q":"Sin señalamiento, ¿cuál es el límite en avenidas primarias sin acceso controlado?","o":["50 km/h","40 km/h","60 km/h","80 km/h"],"e":"50 km/h en avenidas primarias sin acceso controlado y en vialidades estatales de zonas urbanas.","p":24},
+{"t":"Velocidad y alcohol","q":"¿Cuál es el límite en carriles centrales de vías de acceso controlado y en carreteras estatales fuera de zona urbana?","o":["80 km/h","60 km/h","100 km/h","110 km/h"],"e":"80 km/h en carriles centrales de acceso controlado y carreteras estatales fuera de zonas urbanas.","p":25},
+{"t":"Velocidad y alcohol","q":"¿Cuál es el límite para automóviles en carreteras y autopistas de jurisdicción estatal?","o":["110 km/h","100 km/h","120 km/h","95 km/h"],"e":"110 km/h para autos; 95 km/h para autobuses y 80 km/h para carga.","p":25},
+{"t":"Velocidad y alcohol","q":"¿Cuál es la velocidad máxima de operación en cualquier intersección, sin importar el tipo de vía?","o":["50 km/h","30 km/h","60 km/h","80 km/h"],"e":"Ninguna intersección puede tener una velocidad de operación mayor a 50 km/h en sus accesos.","p":25},
+{"t":"Velocidad y alcohol","q":"¿Cuál es el límite de alcohol para conducir un automóvil particular?","o":["0.25 mg/L en aire espirado (0.05 g/dL en sangre)","0.40 mg/L en aire espirado","0.10 mg/L en aire espirado","Cero; no se permite nada"],"e":"Autos: máximo 0.25 mg/L en aire espirado o 0.05 g/dL en sangre. Motos: 0.1 mg/L. Transporte de pasajeros y de carga: cero.","p":23},
+{"t":"Velocidad y alcohol","q":"Si te niegas a hacer la prueba de alcoholimetría:","o":["Te ponen a disposición de la autoridad competente, que fija la sanción","No pasa nada; es voluntaria","Solo te dan una amonestación verbal","Te dejan ir si pagas en el momento"],"e":"Negarse a la prueba implica ser puesto a disposición de la autoridad competente. Negarse al examen médico además es infracción grave.","p":24},
+{"t":"Rebase, giros y carriles","q":"Al rebasar a un ciclista o motociclista, ¿qué separación lateral mínima debes dejar?","o":["1.50 metros","50 centímetros","1 metro","3 metros"],"e":"Al menos 1.50 m de separación lateral con ciclistas, motociclistas y cualquier vehículo.","p":15},
+{"t":"Rebase, giros y carriles","q":"¿Con cuánta anticipación debes encender las direccionales antes de una maniobra?","o":["30 metros antes","5 metros antes","Justo al girar","100 metros antes"],"e":"Las direccionales se activan 30 metros antes del lugar de la maniobra.","p":12},
+{"t":"Rebase, giros y carriles","q":"¿Cuánto puedes circular en reversa como máximo (si sí puedes avanzar hacia adelante)?","o":["10 metros, a máximo 10 km/h y con intermitentes","20 metros a 20 km/h","Lo que necesites si vas despacio","50 metros con luces encendidas"],"e":"No más de 10 m en reversa, a máximo 10 km/h y con intermitentes. Prohibido en intersecciones, accesos controlados y curvas.","p":13},
+{"t":"Rebase, giros y carriles","q":"¿Por qué lado se rebasa como regla general?","o":["Por la izquierda","Por la derecha","Por cualquiera que esté libre","Por el acotamiento"],"e":"Siempre por la izquierda. Una excepción: cuando el vehículo de adelante está por girar a la izquierda en una vía de varios carriles.","p":18},
+{"t":"Rebase, giros y carriles","q":"El auto de adelante se detuvo para dejar cruzar a unos peatones. ¿Puedes rebasarlo?","o":["No, está prohibido","Sí, si no viene nadie en sentido contrario","Sí, tocando el claxon","Sí, por la derecha"],"e":"Está prohibido rebasar a un vehículo que se detuvo para ceder el paso a peatones.","p":13},
+{"t":"Rebase, giros y carriles","q":"¿Se permite la vuelta continua a la derecha con el semáforo en rojo?","o":["Solo si hay señalización que la permita, y respetando a los peatones","Sí, siempre","Sí, si no viene nadie","No, nunca en ningún caso"],"e":"La vuelta continua a la derecha está prohibida, salvo que haya señalización que la permita.","p":19},
+{"t":"Rebase, giros y carriles","q":"¿Cuándo se permite la vuelta continua a la izquierda?","o":["Cuando la vía por la que circulas y a la que te incorporas son ambas de un solo sentido","Siempre que no vengan autos","Nunca","Solo de noche"],"e":"Solo es continua a la izquierda cuando ambas vías son de un solo sentido.","p":16},
+{"t":"Rebase, giros y carriles","q":"Para dar vuelta en calles normales (sin acceso controlado), ¿con cuánta anticipación debes colocarte en el carril correspondiente?","o":["40 metros antes","10 metros antes","80 metros antes","No hay distancia definida"],"e":"40 m antes en calles normales; 80 m antes en vías de acceso controlado.","p":18},
+{"t":"Rebase, giros y carriles","q":"¿Cómo se debe hacer un cambio de varios carriles?","o":["De forma escalonada, un carril a la vez y con direccionales","De un solo movimiento para no estorbar","Sin direccionales si no hay nadie","Solo frenando primero"],"e":"El cambio de carril se hace de carril en carril, avisando con direccionales, sin maniobras intempestivas.","p":17},
+{"t":"Rebase, giros y carriles","q":"En una vía de más de tres carriles, dos autos quieren pasarse al mismo carril central desde lados opuestos. ¿Quién tiene derecho?","o":["Quien entra de derecha a izquierda","Quien entra de izquierda a derecha","El que vaya más rápido","El más grande"],"e":"El derecho de acceso al carril central es de quien entra de derecha a izquierda.","p":17},
+{"t":"Rebase, giros y carriles","q":"Sin direccionales, ¿cómo indicas con la mano que vas a dar vuelta a la derecha?","o":["Brazo izquierdo fuera, vertical, con la mano extendida hacia arriba","Brazo izquierdo horizontal","Brazo izquierdo inclinado hacia abajo","Brazo derecho por la ventana derecha"],"e":"Derecha: brazo vertical con la mano hacia arriba. Detenerse o bajar la velocidad: brazo horizontal. Izquierda: brazo extendido inclinado hacia abajo.","p":17},
+{"t":"Rebase, giros y carriles","q":"¿Puedes circular lento por el carril izquierdo?","o":["No, está prohibido si impides que otros rebasen","Sí, siempre que respetes el límite","Sí, si vas a dar vuelta en 2 km","Solo en carretera"],"e":"Está prohibido circular lentamente por el carril izquierdo impidiendo el rebase de los demás.","p":13},
+{"t":"Estacionamiento","q":"Si la esquina no tiene una marca de límite, ¿a qué distancia mínima de ella puedes estacionarte?","o":["10 metros","3 metros","5 metros","No hay restricción"],"e":"Prohibido estacionarse a menos de 10 m de la esquina cuando no está marcado.","p":26},
+{"t":"Estacionamiento","q":"¿A qué distancia mínima del acceso a bomberos, hospitales, gasolineras o escuelas puedes estacionarte?","o":["5 metros","1 metro","10 metros","20 metros"],"e":"Prohibido a menos de 5 m del acceso a estaciones de bomberos, ambulancias, policía, hospitales, gasolineras, escuelas y lugares de concentración masiva.","p":26},
+{"t":"Estacionamiento","q":"La guarnición (machuelo) está pintada de rojo. Significa:","o":["Prohibido estacionarse","Estacionamiento para discapacitados","Zona de carga y descarga","Estacionamiento con parquímetro"],"e":"Pintura roja en guarnición, machuelo o filo de banqueta indica prohibido estacionarse.","p":26},
+{"t":"Estacionamiento","q":"¿A qué distancia mínima de una curva o de la cima de una pendiente puedes estacionarte?","o":["100 metros","20 metros","50 metros","10 metros"],"e":"Prohibido estacionarse a menos de 100 m de una curva o cima.","p":26},
+{"t":"Obligaciones y prohibiciones","q":"¿Cuál de estos documentos NO estás obligado a llevar en el vehículo?","o":["La factura del vehículo","La tarjeta de circulación","La póliza de seguro","La licencia vigente"],"e":"Debes portar placas, engomado, holograma de verificación, tarjeta de circulación, licencia vigente y póliza de seguro. La factura no está en la lista.","p":9},
+{"t":"Obligaciones y prohibiciones","q":"¿Qué seguro es obligatorio para todo vehículo que circula en Puebla?","o":["Responsabilidad civil por daños a terceros","Cobertura amplia","Robo total","Gastos médicos del conductor"],"e":"Todo vehículo debe tener seguro de responsabilidad civil por daños a terceros. Sin él, la multa es de 20 a 40 UMA.","p":25},
+{"t":"Obligaciones y prohibiciones","q":"Los niños menores de 12 años:","o":["No pueden ir en los asientos delanteros","Pueden ir adelante con cinturón","Pueden ir adelante si son altos","Pueden ir adelante en trayectos cortos"],"e":"Está prohibido llevar menores de 12 años adelante; deben ir atrás con su sistema de retención infantil. Es infracción grave.","p":13},
+{"t":"Obligaciones y prohibiciones","q":"¿Cómo se permite usar el celular mientras conduces?","o":["Solo con manos libres y en un sujetador que no estorbe la vista","En la mano si es una llamada corta","En la mano solo en semáforo en rojo","Para leer mensajes si vas despacio"],"e":"Prohibido manipular el teléfono o leer y enviar mensajes. Solo se permite con manos libres en un sujetador que no obstruya la visibilidad. Sujetar el celular es infracción grave.","p":23},
+{"t":"Obligaciones y prohibiciones","q":"Vas con luces altas en carretera y se aproxima un auto en sentido contrario. ¿Qué haces?","o":["Cambias a luz baja para no deslumbrarlo","Mantienes la luz alta","Apagas las luces","Enciendes las intermitentes"],"e":"La luz alta se cambia a baja en cuanto se aproxima un vehículo en sentido opuesto. Tampoco se usa alta cuando sigues de cerca a otro auto.","p":11},
+{"t":"Obligaciones y prohibiciones","q":"¿Cuándo se usan las luces intermitentes?","o":["Cuando estás parado temporalmente en una zona no permitida o adviertes un riesgo","Para estacionarte en doble fila","Cuando llueve, todo el tiempo","Para pedir paso"],"e":"Intermitentes: vehículo parado o estacionado temporalmente en zona no permitida, o cuando se advierte un riesgo.","p":11},
+{"t":"Obligaciones y prohibiciones","q":"Un vehículo de emergencia circula con luces y sirena delante de ti. ¿A qué distancia mínima debes ir detrás?","o":["50 metros","10 metros","20 metros","Puedes seguirlo de cerca para avanzar más rápido"],"e":"Prohibido circular detrás de vehículos de emergencia con señales encendidas; guarda al menos 50 m.","p":14},
+{"t":"Obligaciones y prohibiciones","q":"¿Qué dice el reglamento sobre los vidrios polarizados?","o":["Prohibidos, salvo que vengan de fábrica","Permitidos en todos los vidrios","Permitidos solo en el parabrisas","Permitidos si tienes permiso de la aseguradora"],"e":"Prohibidos vidrios polarizados u oscurecidos que obstruyan la visibilidad, salvo los instalados de fábrica.","p":10},
+{"t":"Obligaciones y prohibiciones","q":"¿Qué luces están prohibidas en un vehículo particular?","o":["Luces rojas al frente y blancas atrás (salvo placa y reversa)","Luces de reversa","Luces direccionales ámbar","Luz que ilumina la placa"],"e":"Prohibido usar luces rojas al frente y blancas atrás, excepto las de placa y reversa. También están prohibidas las estroboscópicas.","p":12},
+{"t":"Siniestros y sanciones","q":"Choque con solo daños materiales: ambos autos pueden circular, nadie está bajo influjo de sustancias y no hay daño a bienes públicos. ¿Qué hacen?","o":["Mueven los autos para liberar el tránsito y llaman a la aseguradora","Dejan los autos donde quedaron hasta que llegue la grúa","Se van sin avisar a nadie","Esperan al Ministerio Público"],"e":"En ese caso se mueven los vehículos para no obstruir y se llama a la aseguradora. Si no hay seguro o no hay acuerdo, no se mueven hasta que llegue el agente.","p":28},
+{"t":"Siniestros y sanciones","q":"Si un vehículo motorizado lesiona a un peatón o ciclista, ¿de quién se presume la responsabilidad?","o":["De quien conduce el vehículo, salvo prueba en contrario","Del peatón o ciclista","De ambos por igual","De la autoridad vial"],"e":"Se presume la responsabilidad de quien conduce el vehículo motorizado, salvo prueba en contrario.","p":22},
+{"t":"Siniestros y sanciones","q":"Después de un siniestro, ¿a qué distancia se colocan las señales preventivas reflejantes?","o":["Cuando menos a 25 pasos (unos 20 metros)","A 2 metros","A 100 metros","Junto al vehículo"],"e":"Las señales preventivas deben ser reflejantes y colocarse cuando menos a 25 pasos, unos 20 m del vehículo.","p":29},
+{"t":"Siniestros y sanciones","q":"¿Cuánto tiempo tienes para pagar una multa de tránsito?","o":["20 días hábiles","5 días naturales","3 meses","Hasta el siguiente refrendo"],"e":"Tienes 20 días hábiles para pagar; durante ese plazo la boleta justifica la retención de licencia, tarjeta o placa.","p":32},
+{"t":"Siniestros y sanciones","q":"Las multas por infracciones consideradas graves (como no usar el cinturón o pasarse el alto):","o":["Se pagan al 100%, sin descuento","Tienen 50% de descuento si pagas pronto","Se pueden cambiar por una amonestación","No se cobran la primera vez"],"e":"Las infracciones graves no tienen beneficio alguno: se paga el 100% del importe.","p":32},
+{"t":"Siniestros y sanciones","q":"¿Cuál es motivo de cancelación de la licencia?","o":["Conducir en estado de ebriedad o bajo influjo de drogas en dos o más ocasiones","Una multa por estacionarse mal","No hacer la verificación una vez","Cambiar de domicilio"],"e":"Entre otros motivos: ebriedad o drogas en dos o más ocasiones, conducción temeraria, documentos falsos o resolución judicial.","p":11}
+]
+</script>
+
+<script>
+(function () {
+  const Q = JSON.parse(document.getElementById('data').textContent);
+  Q.forEach((q, i) => { q.id = i; });
+  const TEMAS = ['Todos'].concat([...new Set(Q.map(q => q.t))]);
+  const EXAM_N = 10, EXAM_SECS = 600, PASS = 8;
+
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+  };
+  let missed = new Set(store.get('missed', []).filter(i => i < Q.length));
+  const saveMissed = () => { store.set('missed', [...missed]); $('#missed-n').textContent = missed.size; };
+
+  const $ = s => document.querySelector(s);
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const LETTERS = ['A', 'B', 'C', 'D'];
+
+  const S = { mode: 'practica', tema: 'Todos', list: [], pos: 0, order: [], picked: null, answered: false, right: 0, done: 0, exam: [], timer: null, left: 0 };
+
+  function startPractice(mode) {
+    stopTimer();
+    S.mode = mode;
+    let ids = mode === 'falladas' ? [...missed] : Q.filter(q => S.tema === 'Todos' || q.t === S.tema).map(q => q.id);
+    S.list = shuffle(ids); S.pos = 0; S.right = 0; S.done = 0;
+    prep(); render();
+  }
+  function startExam() {
+    stopTimer();
+    S.mode = 'simulacro';
+    S.list = shuffle(Q.map(q => q.id)).slice(0, EXAM_N);
+    S.exam = new Array(EXAM_N).fill(null); S.pos = 0; S.left = EXAM_SECS;
+    prep(); render();
+    S.timer = setInterval(() => { S.left--; paintTimer(); if (S.left <= 0) finishExam(); }, 1000);
+  }
+  function stopTimer() { if (S.timer) { clearInterval(S.timer); S.timer = null; } }
+  function prep() {
+    S.order = shuffle([0, 1, 2, 3]);
+    S.picked = S.mode === 'simulacro' ? S.exam[S.pos] : null;
+    S.answered = false;
+  }
+
+  function paintTabs() {
+    document.querySelectorAll('.tab').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.mode === S.mode)));
+  }
+  function paintTimer() {
+    const t = $('#timer'); if (!t) return;
+    const m = Math.floor(Math.max(S.left, 0) / 60), s = Math.max(S.left, 0) % 60;
+    t.textContent = m + ':' + String(s).padStart(2, '0');
+    t.classList.toggle('low', S.left <= 60);
+  }
+
+  function renderBar() {
+    const bar = $('#bar');
+    if (S.mode === 'simulacro') {
+      const n = S.exam.filter(x => x !== null).length;
+      bar.innerHTML = '<span class="stat">Respondidas ' + n + ' de ' + EXAM_N + '</span><span class="timer" id="timer" aria-label="Tiempo restante"></span>';
+      paintTimer();
+    } else if (S.mode === 'practica') {
+      bar.innerHTML = '<label for="tema">Tema <select id="tema">' + TEMAS.map(t => '<option' + (t === S.tema ? ' selected' : '') + '>' + esc(t) + '</option>').join('') + '</select></label>' +
+        '<span class="stat">Aciertos ' + S.right + ' / ' + S.done + '</span>';
+      $('#tema').addEventListener('change', e => { S.tema = e.target.value; startPractice('practica'); });
+    } else {
+      bar.innerHTML = '<span>Las preguntas que fallaste. Al acertarlas salen de esta lista.</span><span class="stat">Aciertos ' + S.right + ' / ' + S.done + '</span>';
+    }
+  }
+
+  function render() {
+    paintTabs(); renderBar();
+    const card = $('#card');
+    if (!S.list.length) {
+      card.innerHTML = '<p class="empty">' + (S.mode === 'falladas' ? 'No tienes preguntas falladas. Practica o haz un simulacro y aquí aparecerán las que falles.' : 'No hay preguntas en este tema.') + '</p>';
+      return;
+    }
+    if (S.mode !== 'simulacro' && S.pos >= S.list.length) return renderPracticeEnd();
+    const q = Q[S.list[S.pos]];
+    const exam = S.mode === 'simulacro';
+    let html = '<div class="meta"><span>Pregunta ' + (S.pos + 1) + ' de ' + S.list.length + '</span><span class="chip">' + esc(q.t) + '</span></div>' +
+      '<p class="q">' + esc(q.q) + '</p><div class="opts" role="group" aria-label="Opciones">';
+    S.order.forEach((oi, k) => {
+      let cls = 'opt';
+      if (exam && S.picked === oi) cls += ' sel';
+      if (!exam && S.answered) { if (oi === 0) cls += ' right'; else if (oi === S.picked) cls += ' wrong'; }
+      html += '<button class="' + cls + '" data-oi="' + oi + '"' + (!exam && S.answered ? ' disabled' : '') + '><span class="k">' + LETTERS[k] + '</span><span>' + esc(q.o[oi]) + '</span></button>';
+    });
+    html += '</div>';
+    if (!exam && S.answered) {
+      const ok = S.picked === 0;
+      html += '<div class="fb' + (ok ? '' : ' no') + '"><strong>' + (ok ? 'Correcto' : 'Incorrecto. La respuesta es: ' + esc(q.o[0])) + '</strong>' + esc(q.e) + '<span class="src">Guía SMT, página ' + q.p + '</span></div>';
+    }
+    html += '<div class="actions"><span class="kbd-hint" style="margin-right:auto;align-self:center">Teclas 1–4 para elegir, Enter para seguir</span>';
+    if (exam) {
+      if (S.pos > 0) html += '<button class="btn ghost" id="prev">Anterior</button>';
+      html += '<button class="btn" id="next"' + (S.picked === null ? ' disabled' : '') + '>' + (S.pos === EXAM_N - 1 ? 'Terminar examen' : 'Siguiente') + '</button>';
+    } else if (S.answered) {
+      html += '<button class="btn" id="next">' + (S.pos === S.list.length - 1 ? 'Ver resultado' : 'Siguiente') + '</button>';
+    }
+    html += '</div>';
+    card.innerHTML = html;
+    card.querySelectorAll('.opt').forEach(b => b.addEventListener('click', () => pick(+b.dataset.oi)));
+    const nx = $('#next'); if (nx) nx.addEventListener('click', next);
+    const pv = $('#prev'); if (pv) pv.addEventListener('click', () => { S.pos--; prep(); render(); });
+  }
+
+  function pick(oi) {
+    const q = Q[S.list[S.pos]];
+    if (S.mode === 'simulacro') { S.picked = oi; S.exam[S.pos] = oi; render(); return; }
+    if (S.answered) return;
+    S.picked = oi; S.answered = true; S.done++;
+    if (oi === 0) { S.right++; if (missed.delete(q.id)) saveMissed(); }
+    else { missed.add(q.id); saveMissed(); }
+    render();
+    const nx = $('#next'); if (nx) nx.focus({ preventScroll: true });
+  }
+
+  function next() {
+    if (S.mode === 'simulacro') {
+      if (S.picked === null) return;
+      if (S.pos === EXAM_N - 1) return finishExam();
+      S.pos++; prep(); render(); return;
+    }
+    if (!S.answered) return;
+    S.pos++; prep(); render();
+  }
+
+  function renderPracticeEnd() {
+    const pct = S.done ? Math.round(100 * S.right / S.done) : 0;
+    $('#card').innerHTML = '<div class="result"><span class="eyebrow" style="color:var(--muted)">Ronda terminada</span>' +
+      '<span class="big">' + S.right + ' / ' + S.done + '</span><span>' + pct + '% de aciertos</span>' +
+      '<div class="actions" style="justify-content:center;margin-top:10px">' +
+      (missed.size ? '<button class="btn ghost" id="go-missed">Repasar falladas (' + missed.size + ')</button>' : '') +
+      '<button class="btn" id="again">Otra ronda</button></div></div>';
+    $('#again').addEventListener('click', () => startPractice(S.mode === 'falladas' ? 'falladas' : 'practica'));
+    const gm = $('#go-missed'); if (gm) gm.addEventListener('click', () => startPractice('falladas'));
+  }
+
+  function finishExam() {
+    stopTimer();
+    let right = 0; const wrong = [];
+    S.list.forEach((id, i) => {
+      if (S.exam[i] === 0) { right++; if (missed.delete(id)) {} }
+      else { missed.add(id); wrong.push({ q: Q[id], yours: S.exam[i] }); }
+    });
+    saveMissed();
+    const pass = right >= PASS;
+    let html = '<div class="result"><span class="eyebrow" style="color:var(--muted)">' + (S.left <= 0 ? 'Se acabó el tiempo' : 'Simulacro terminado') + '</span>' +
+      '<span class="big">' + right + ' / ' + EXAM_N + '</span>' +
+      '<span class="verdict ' + (pass ? 'pass' : 'fail') + '">' + (pass ? 'Aprobado' : 'No aprobado') + '</span>' +
+      '<span>Necesitas ' + PASS + ' correctas.</span>';
+    if (wrong.length) {
+      html += '<div class="review"><strong style="margin-top:12px">Repaso de las que fallaste</strong>';
+      wrong.forEach(w => {
+        html += '<div class="review-item"><p><strong>' + esc(w.q.q) + '</strong></p>' +
+          (w.yours === null ? '<p class="yours">Sin responder</p>' : '<p class="yours">Tu respuesta: ' + esc(w.q.o[w.yours]) + '</p>') +
+          '<p class="good">Correcta: ' + esc(w.q.o[0]) + '</p><p class="note" style="margin:0">' + esc(w.q.e) + ' (Guía p. ' + w.q.p + ')</p></div>';
+      });
+      html += '</div>';
+    }
+    html += '<div class="actions" style="justify-content:center;margin-top:10px"><button class="btn" id="again">Otro simulacro</button></div></div>';
+    $('#bar').innerHTML = '<span class="stat">Simulacro de ' + EXAM_N + ' preguntas</span>';
+    $('#card').innerHTML = html;
+    $('#again').addEventListener('click', startExam);
+  }
+
+  document.querySelectorAll('.tab').forEach(b => b.addEventListener('click', () => {
+    const m = b.dataset.mode;
+    if (m === 'simulacro') startExam(); else startPractice(m);
+  }));
+  document.addEventListener('keydown', e => {
+    if (e.target.tagName === 'SELECT') return;
+    if (['1', '2', '3', '4'].includes(e.key)) {
+      const btns = document.querySelectorAll('.opt:not([disabled])'); const b = btns[+e.key - 1];
+      if (b) { e.preventDefault(); b.click(); }
+    } else if (e.key === 'Enter') {
+      const nx = $('#next'); if (nx && !nx.disabled && document.activeElement?.classList.contains('opt') === false) { e.preventDefault(); nx.click(); }
+    }
+  });
+
+  $('#missed-n').textContent = missed.size;
+  startPractice('practica');
+})();
+</script>
+
+</body>
+</html>
