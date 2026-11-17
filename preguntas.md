@@ -1,9 +1,9 @@
 # Quiz: examen teórico de licencia (Puebla)
 
-Basado en la *Guía de Estudio para el Examen Teórico* de la SMT Puebla (junio de 2026). No son las preguntas oficiales.
+Basado en la *Guía de Estudio para el Examen Teórico* de la SMT Puebla (junio de 2026); copia en PDF: [`guia-smt-2026.pdf`](guia-smt-2026.pdf). No son las preguntas oficiales.
 Examen real: 10 preguntas, 10 minutos, pasas con 8. Versión interactiva: `index.html` (GitHub Pages).
 
-Total: 61 preguntas. La respuesta correcta es siempre la **A** en este archivo (en la versión interactiva se revuelven).
+Total: 82 preguntas. La respuesta correcta es siempre la **A** en este archivo (en la versión interactiva se revuelven).
 
 ## Señales y semáforos
 
@@ -387,6 +387,197 @@ Total: 61 preguntas. La respuesta correcta es siempre la **A** en este archivo (
 
 ---
 
+## Señales con imagen (págs. 34 y 35)
+
+**62. ¿Qué indica esta señal preventiva?**
+
+![Señal](img/curva.webp)
+
+- A) Curva
+- B) Curva cerrada
+- C) Curva inversa
+- D) Salida
+
+**63. ¿Qué indica esta señal preventiva?**
+
+![Señal](img/curva-cerrada.webp)
+
+- A) Curva cerrada
+- B) Curva
+- C) Entronque
+- D) Salida
+
+**64. ¿Qué indica esta señal preventiva?**
+
+![Señal](img/curva-inversa.webp)
+
+- A) Curva inversa
+- B) Curva inversa cerrada
+- C) Zona de curvas
+- D) Curva
+
+**65. ¿Qué indica esta señal preventiva?**
+
+![Señal](img/curva-inversa-cerrada.webp)
+
+- A) Curva inversa cerrada
+- B) Curva inversa
+- C) Curva cerrada
+- D) Zona de curvas
+
+**66. ¿Qué indica esta señal preventiva?**
+
+![Señal](img/zona-curvas.webp)
+
+- A) Zona de curvas
+- B) Curva inversa
+- C) Curva inversa cerrada
+- D) Curva
+
+**67. ¿Qué indica esta señal preventiva?**
+
+![Señal](img/interseccion-lateral.webp)
+
+- A) Intersección lateral oblicua
+- B) Incorporación lateral oblicua
+- C) Salida
+- D) Bifurcación en Y
+
+**68. ¿Qué indica esta señal preventiva?**
+
+![Señal](img/incorporacion-lateral.webp)
+
+- A) Incorporación lateral oblicua
+- B) Intersección lateral oblicua
+- C) Salida
+- D) Doble sentido de circulación
+
+**69. ¿Qué indica esta señal preventiva?**
+
+![Señal](img/doble-sentido.webp)
+
+- A) Doble sentido de circulación
+- B) Incorporación lateral oblicua
+- C) Reducción o ampliación simétrica
+- D) Puente angosto
+
+**70. ¿Qué indica esta señal preventiva?**
+
+![Señal](img/salida.webp)
+
+- A) Salida
+- B) Intersección lateral oblicua
+- C) Incorporación lateral oblicua
+- D) Bifurcación en Y
+
+**71. ¿Qué indica esta señal preventiva?**
+
+![Señal](img/reduccion-simetrica.webp)
+
+- A) Reducción o ampliación simétrica
+- B) Reducción o ampliación asimétrica
+- C) Puente angosto
+- D) Doble sentido de circulación
+
+**72. ¿Qué indica esta señal preventiva?**
+
+![Señal](img/reduccion-asimetrica.webp)
+
+- A) Reducción o ampliación asimétrica
+- B) Reducción o ampliación simétrica
+- C) Puente angosto
+- D) Salida
+
+**73. ¿Qué indica esta señal preventiva?**
+
+![Señal](img/puente-angosto.webp)
+
+- A) Puente angosto
+- B) Reducción o ampliación simétrica
+- C) Reducción o ampliación asimétrica
+- D) Doble sentido de circulación
+
+**74. ¿Qué indica esta señal preventiva?**
+
+![Señal](img/bicicletas.webp)
+
+- A) Circulación de bicicletas
+- B) Carril exclusivo para bicicletas
+- C) Prohibido circular en bicicleta
+- D) Ciclovía con prioridad sobre peatones
+
+**75. ¿Qué indica esta señal preventiva?**
+
+![Señal](img/curva-cerrada-u.webp)
+
+- A) Curva cerrada
+- B) Retorno permitido
+- C) Curva inversa
+- D) Zona de curvas
+
+**76. ¿Qué indica esta señal preventiva?**
+
+![Señal](img/derrumbes.webp)
+
+- A) Zona de derrumbes
+- B) Zona de grava suelta
+- C) Reductor de velocidad
+- D) Próximo túnel
+
+**77. ¿Qué indica esta señal preventiva?**
+
+![Señal](img/cruce-tren.webp)
+
+- A) Cruce de tren
+- B) Intersección de dos vías
+- C) Prohibido el paso
+- D) Puente angosto
+
+**78. ¿Qué indica esta señal preventiva?**
+
+![Señal](img/reductor.webp)
+
+- A) Reductor de velocidad
+- B) Zona de derrumbes
+- C) Zona de grava suelta
+- D) Pendiente peligrosa
+
+**79. ¿Qué indica esta señal preventiva?**
+
+![Señal](img/grava.webp)
+
+- A) Zona de grava suelta
+- B) Zona de derrumbes
+- C) Reductor de velocidad
+- D) Camino resbaloso por lluvia
+
+**80. ¿Qué indica esta señal preventiva?**
+
+![Señal](img/entronque.webp)
+
+- A) Entronque
+- B) Intersección lateral oblicua
+- C) Salida
+- D) Bifurcación en Y
+
+**81. ¿Qué indica esta señal preventiva?**
+
+![Señal](img/tunel.webp)
+
+- A) Próximo túnel
+- B) Zona de derrumbes
+- C) Puente angosto
+- D) Paso a desnivel
+
+**82. ¿Qué indica esta señal preventiva?**
+
+![Señal](img/bifurcacion-y.webp)
+
+- A) Bifurcación en Y
+- B) Entronque
+- C) Salida
+- D) Intersección lateral oblicua
+
 ## Respuestas y explicación
 
 1. A: Las preventivas advierten sobre un peligro potencial: pendiente, curva peligrosa, escuelas, cruce de peatones o de ferrocarril. (p. 3)
@@ -450,3 +641,24 @@ Total: 61 preguntas. La respuesta correcta es siempre la **A** en este archivo (
 59. A: Tienes 20 días hábiles para pagar; durante ese plazo la boleta justifica la retención de licencia, tarjeta o placa. (p. 32)
 60. A: Las infracciones graves no tienen beneficio alguno: se paga el 100% del importe. (p. 32)
 61. A: Entre otros motivos: ebriedad o drogas en dos o más ocasiones, conducción temeraria, documentos falsos o resolución judicial. (p. 11)
+62. A: Flecha curva suave: adelante hay una curva. Baja la velocidad antes de entrar. (p. 34)
+63. A: La flecha dobla en ángulo recto: la curva es cerrada, más pronunciada que una curva normal. (p. 34)
+64. A: Dos curvas suaves seguidas, en sentidos opuestos. Si los quiebres fueran en ángulo recto sería curva inversa cerrada. (p. 34)
+65. A: Dos curvas seguidas en sentidos opuestos, ambas en ángulo recto. (p. 34)
+66. A: La línea serpentea varias veces: viene un tramo con muchas curvas seguidas, no solo dos. (p. 34)
+67. A: Una vía lateral cruza en diagonal con la tuya. No hay flecha: es intersección, no salida ni incorporación. (p. 34)
+68. A: La flecha va hacia adelante y una vía se une por un lado: otros vehículos se incorporan a tu camino. (p. 34)
+69. A: Flechas en sentidos opuestos: la vía pasa a tener circulación en ambos sentidos. (p. 34)
+70. A: La flecha sale de la vía principal hacia un lado: adelante hay una salida. (p. 34)
+71. A: Las dos orillas se cierran igual por ambos lados: la vía se angosta (o ensancha) de forma simétrica. (p. 34)
+72. A: Solo una orilla cambia: la vía se angosta (o ensancha) por un solo lado. (p. 34)
+73. A: Las orillas se cierran y se abren otra vez, como los bordes de un puente: adelante hay un puente angosto. (p. 34)
+74. A: Rombo amarillo con ciclista: es preventiva y avisa que circulan bicicletas. Las de carril exclusivo son restrictivas o informativas. (p. 35)
+75. A: La guía también usa esta flecha en U para curva cerrada. No la confundas con retorno: el retorno es una señal restrictiva (círculo rojo sobre fondo blanco), no un rombo amarillo. (p. 35)
+76. A: Caen piedras desde un talud junto al camino: zona de derrumbes. (p. 35)
+77. A: La X con los rieles en medio: cruce con vía de ferrocarril. (p. 35)
+78. A: El auto pasa sobre un bordo: adelante hay un reductor de velocidad (tope). (p. 35)
+79. A: Piedritas que salen disparadas detrás de las llantas: hay grava suelta en el camino. (p. 35)
+80. A: Una vía lateral llega en ángulo recto (forma de T acostada): entronque. (p. 35)
+81. A: El auto entra en un arco: adelante hay un túnel. (p. 35)
+82. A: El camino se divide en dos, en forma de Y. (p. 35)
